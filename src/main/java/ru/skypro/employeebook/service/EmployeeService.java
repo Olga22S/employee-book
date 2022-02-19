@@ -1,9 +1,9 @@
-package ru.skypro.employeebook.services;
+package ru.skypro.employeebook.service;
 
-import ru.skypro.employeebook.entities.Employee;
-import ru.skypro.employeebook.exceptions.AlreadyExistsEmployeeException;
-import ru.skypro.employeebook.exceptions.ArrayIsFullException;
-import ru.skypro.employeebook.exceptions.EmployeeNotFoundException;
+import ru.skypro.employeebook.model.Employee;
+import ru.skypro.employeebook.exception.AlreadyExistsEmployeeException;
+import ru.skypro.employeebook.exception.ArrayIsFullException;
+import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 
 public interface EmployeeService {
 

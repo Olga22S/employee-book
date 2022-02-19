@@ -1,4 +1,4 @@
-package ru.skypro.employeebook.entities;
+package ru.skypro.employeebook.model;
 
 import java.util.Objects;
 

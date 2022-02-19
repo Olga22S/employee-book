@@ -1,14 +1,14 @@
-package ru.skypro.employeebook.controllers;
+package ru.skypro.employeebook.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.employeebook.entities.Employee;
-import ru.skypro.employeebook.exceptions.AlreadyExistsEmployeeException;
-import ru.skypro.employeebook.exceptions.ArrayIsFullException;
-import ru.skypro.employeebook.exceptions.EmployeeNotFoundException;
-import ru.skypro.employeebook.services.EmployeeService;
+import ru.skypro.employeebook.model.Employee;
+import ru.skypro.employeebook.exception.AlreadyExistsEmployeeException;
+import ru.skypro.employeebook.exception.ArrayIsFullException;
+import ru.skypro.employeebook.exception.EmployeeNotFoundException;
+import ru.skypro.employeebook.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
