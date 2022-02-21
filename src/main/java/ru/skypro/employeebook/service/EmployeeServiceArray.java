@@ -1,10 +1,10 @@
 package ru.skypro.employeebook.service;
 
 import org.springframework.stereotype.Service;
-import ru.skypro.employeebook.model.Employee;
 import ru.skypro.employeebook.exception.AlreadyExistsEmployeeException;
 import ru.skypro.employeebook.exception.ArrayIsFullException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
+import ru.skypro.employeebook.model.Employee;
 
 import static java.util.Objects.isNull;
 
@@ -15,8 +15,7 @@ public class EmployeeServiceArray implements EmployeeService {
     private int counter = 0;
 
     @Override
-    public Employee addEmployee(String firstName, String lastName)
-            throws ArrayIsFullException, AlreadyExistsEmployeeException {
+    public Employee addEmployee(String firstName, String lastName) {
         if (counter == 10) {
             throw new ArrayIsFullException("Array is full!");
         }
@@ -29,7 +28,7 @@ public class EmployeeServiceArray implements EmployeeService {
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee removeEmployee(String firstName, String lastName) {
         Employee employee = findEmployee(firstName, lastName);
         if (isNull(employee)) {
             throw new EmployeeNotFoundException("This employee doesn't exist");
@@ -47,7 +46,7 @@ public class EmployeeServiceArray implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee getEmployee(String firstName, String lastName) {
         Employee employee = findEmployee(firstName, lastName);
         if (isNull(employee)) {
             throw new EmployeeNotFoundException("Employee is not found!");

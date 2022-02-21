@@ -5,9 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.employeebook.model.Employee;
-import ru.skypro.employeebook.exception.AlreadyExistsEmployeeException;
-import ru.skypro.employeebook.exception.ArrayIsFullException;
-import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.service.EmployeeService;
 
 @RestController
@@ -21,20 +18,17 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/add")
-    public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName)
-            throws ArrayIsFullException, AlreadyExistsEmployeeException {
+    public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.addEmployee(firstName, lastName);
     }
 
     @GetMapping(value = "/remove")
-    public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName)
-            throws EmployeeNotFoundException {
+    public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.removeEmployee(firstName, lastName);
     }
 
     @GetMapping(value = "/find")
-    public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName)
-            throws EmployeeNotFoundException {
+    public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.getEmployee(firstName, lastName);
     }
 }

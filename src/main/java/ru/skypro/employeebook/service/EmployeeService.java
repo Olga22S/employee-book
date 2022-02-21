@@ -7,9 +7,9 @@ import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 
 public interface EmployeeService {
 
-    Employee addEmployee(String firstName, String lastName) throws ArrayIsFullException, AlreadyExistsEmployeeException;
+    Employee addEmployee(String firstName, String lastName);
 
-    Employee removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException;
+    Employee removeEmployee(String firstName, String lastName);
 
-    Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException;
+    Employee getEmployee(String firstName, String lastName);
 }
