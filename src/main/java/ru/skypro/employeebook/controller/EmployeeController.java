@@ -11,23 +11,23 @@ import ru.skypro.employeebook.service.EmployeeService;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    @GetMapping(value = "/add")
+    @GetMapping("/add")
     public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.addEmployee(firstName, lastName);
     }
 
-    @GetMapping(value = "/remove")
+    @GetMapping("/remove")
     public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.removeEmployee(firstName, lastName);
     }
 
-    @GetMapping(value = "/find")
+    @GetMapping("/find")
     public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.getEmployee(firstName, lastName);
     }
