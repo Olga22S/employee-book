@@ -6,36 +6,33 @@ import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final int ARRAY_SIZE = 10;
-    private final Employee[] employees = new Employee[ARRAY_SIZE];
-    private int counter = 0;
+    private final int LIST_SIZE = 10;
+    private final List<Employee> employees = new ArrayList<>();
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (counter == ARRAY_SIZE) {
-            throw new ArrayIsFullException("Array is full!");
+        if (employees.size() == LIST_SIZE) {
+            throw new ArrayIsFullException("List is full!");
         }
         if (getEmployeeIndex(firstName, lastName) != -1) {
             throw new EmployeeExistsException("This employee already exists");
         }
         Employee employee = new Employee(firstName, lastName);
-        employees[counter++] = employee;
+        employees.add(employee);
         return employee;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        for (int i = 0; i < counter; i++) {
-            if (employees[i].getFirstName().equals(firstName)
-                    && employees[i].getLastName().equals(lastName)) {
-                Employee employee = employees[i];
-                System.arraycopy(employees, i + 1, employees, i, counter - i);
-                counter--;
-                return employee;
-            }
+        int employeeIndex = getEmployeeIndex(firstName, lastName);
+        if (employeeIndex != -1) {
+            return employees.remove(employeeIndex);
         }
         throw new EmployeeNotFoundException("This employee doesn't exist");
     }
@@ -44,16 +41,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployee(String firstName, String lastName) {
         int employeeIndex = getEmployeeIndex(firstName, lastName);
         if (employeeIndex != -1) {
-            return employees[employeeIndex];
+            return employees.get(employeeIndex);
         }
         throw new EmployeeNotFoundException("This employee doesn't exist");
     }
 
+    @Override
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
     private int getEmployeeIndex(String firstName, String lastName) {
-        for (int i = 0; i < counter; i++) {
-            if (employees[i].getFirstName().equals(firstName)
-                    && employees[i].getLastName().equals(lastName)) {
-                return i;
+        for (Employee employee : employees) {
+            if (employee.getFirstName().equals(firstName)
+                    && employee.getLastName().equals(lastName)) {
+                return employees.indexOf(employee);
             }
         }
         return -1;
