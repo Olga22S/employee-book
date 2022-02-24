@@ -1,25 +1,21 @@
 package ru.skypro.employeebook.service;
 
 import org.springframework.stereotype.Service;
-import ru.skypro.employeebook.exception.ArrayIsFullException;
 import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final int LIST_SIZE = 10;
     private final List<Employee> employees = new ArrayList<>();
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (employees.size() == LIST_SIZE) {
-            throw new ArrayIsFullException("List is full!");
-        }
         if (getEmployeeIndex(firstName, lastName) != -1) {
             throw new EmployeeExistsException("This employee already exists");
         }
@@ -48,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployees() {
-        return employees;
+        return Collections.unmodifiableList(employees);
     }
 
     private int getEmployeeIndex(String firstName, String lastName) {
