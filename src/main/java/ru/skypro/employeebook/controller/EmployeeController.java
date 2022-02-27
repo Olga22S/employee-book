@@ -35,7 +35,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Map<Integer, Employee> getEmployees() {
+    public Map<String, Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 }

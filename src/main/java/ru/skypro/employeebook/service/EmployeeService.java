@@ -12,5 +12,5 @@ public interface EmployeeService {
 
     Employee getEmployee(String firstName, String lastName);
 
-    Map<Integer, Employee> getEmployees();
+    Map<String, Employee> getEmployees();
 }
