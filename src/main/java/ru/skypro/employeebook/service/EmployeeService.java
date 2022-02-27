@@ -2,7 +2,7 @@ package ru.skypro.employeebook.service;
 
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.List;
+import java.util.Map;
 
 public interface EmployeeService {
 
@@ -12,5 +12,5 @@ public interface EmployeeService {
 
     Employee getEmployee(String firstName, String lastName);
 
-    List<Employee> getEmployees();
+    Map<Integer, Employee> getEmployees();
 }

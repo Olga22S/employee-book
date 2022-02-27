@@ -5,55 +5,63 @@ import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final List<Employee> employees = new ArrayList<>();
+    private int uid = 1;
+    private final Map<Integer, Employee> employees = new HashMap<>();
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (getEmployeeIndex(firstName, lastName) != -1) {
+        if (getEmployeeKey(firstName, lastName) != 0) {
             throw new EmployeeExistsException("This employee already exists");
         }
         Employee employee = new Employee(firstName, lastName);
-        employees.add(employee);
+        employees.put(uid++, employee);
         return employee;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        int employeeIndex = getEmployeeIndex(firstName, lastName);
-        if (employeeIndex != -1) {
-            return employees.remove(employeeIndex);
+        int key = getEmployeeKey(firstName, lastName);
+        if (key != 0) {
+            Employee employee = employees.get(key);
+            employees.remove(key);
+            return employee;
         }
         throw new EmployeeNotFoundException("This employee doesn't exist");
     }
 
     @Override
     public Employee getEmployee(String firstName, String lastName) {
-        int employeeIndex = getEmployeeIndex(firstName, lastName);
-        if (employeeIndex != -1) {
-            return employees.get(employeeIndex);
+        int key = getEmployeeKey(firstName, lastName);
+        if (key != 0) {
+            return employees.get(key);
         }
-        throw new EmployeeNotFoundException("This employee doesn't exist");
+        throw new EmployeeNotFoundException("Employee is not found!");
     }
 
     @Override
-    public List<Employee> getEmployees() {
-        return Collections.unmodifiableList(employees);
+    public Map<Integer, Employee> getEmployees() {
+        return Collections.unmodifiableMap(employees);
     }
 
-    private int getEmployeeIndex(String firstName, String lastName) {
-        for (Employee employee : employees) {
-            if (employee.getFirstName().equals(firstName)
-                    && employee.getLastName().equals(lastName)) {
-                return employees.indexOf(employee);
-            }
+    private int getEmployeeKey(String firstName, String lastName) {
+        Optional<Entry<Integer, Employee>> employee =
+                employees.entrySet()
+                        .stream()
+                        .filter(s -> s.getValue().getFirstName().equals(firstName)
+                                && s.getValue().getLastName().equals(lastName))
+                        .findFirst();
+        if (employee.isPresent()) {
+            return employee.get().getKey();
         }
-        return -1;
+        return 0;
     }
 }
