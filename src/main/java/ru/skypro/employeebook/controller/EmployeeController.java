@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.employeebook.model.Employee;
 import ru.skypro.employeebook.service.EmployeeService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,7 +36,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Map<String, Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 }

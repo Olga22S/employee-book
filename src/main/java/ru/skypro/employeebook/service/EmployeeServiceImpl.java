@@ -5,9 +5,12 @@ import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.Objects.isNull;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -18,7 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(String firstName, String lastName) {
         String key = firstName + " " + lastName;
         if (employees.containsKey(key)) {
-            throw new EmployeeExistsException("This employee already exists");
+            throw new EmployeeExistsException();
         }
         Employee employee = new Employee(firstName, lastName);
         employees.put(key, employee);
@@ -29,24 +32,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee removeEmployee(String firstName, String lastName) {
         String key = firstName + " " + lastName;
         if (employees.containsKey(key)) {
-            Employee employee = employees.get(key);
-            employees.remove(key);
-            return employee;
+            return employees.remove(key);
         }
-        throw new EmployeeNotFoundException("This employee doesn't exist");
+        throw new EmployeeNotFoundException();
     }
 
     @Override
     public Employee getEmployee(String firstName, String lastName) {
-        String key = firstName + " " + lastName;
-        if (employees.containsKey(key)) {
-            return employees.get(key);
+        Employee employee = employees.get(firstName + " " + lastName);
+        if (isNull(employee)) {
+            throw new EmployeeNotFoundException();
         }
-        throw new EmployeeNotFoundException("Employee is not found!");
+        return employee;
     }
 
     @Override
-    public Map<String, Employee> getEmployees() {
-        return Collections.unmodifiableMap(employees);
+    public List<Employee> getEmployees() {
+        return new ArrayList<>(employees.values());
     }
 }
