@@ -5,10 +5,7 @@ import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
@@ -47,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployees() {
-        return new ArrayList<>(employees.values());
+    public Collection<Employee> getEmployees() {
+        return Collections.unmodifiableCollection(employees.values());
     }
 }
