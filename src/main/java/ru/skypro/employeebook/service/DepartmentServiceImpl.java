@@ -1,6 +1,7 @@
 package ru.skypro.employeebook.service;
 
 import org.springframework.stereotype.Service;
+import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
 import java.util.*;
@@ -20,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return getEmployeesByDepartment().get(dep)
                 .stream()
                 .min(Comparator.comparingDouble(Employee::getSalary))
-                .get();
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return getEmployeesByDepartment().get(dep)
                 .stream()
                 .max(Comparator.comparingDouble(Employee::getSalary))
-                .get();
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
