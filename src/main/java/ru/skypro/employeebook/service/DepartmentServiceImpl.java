@@ -43,11 +43,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public String getStringEmployeesByDepartments() {
         StringBuilder result = new StringBuilder();
-        for (Integer department : getDepartments()) {
+        for (int department : getDepartments()) {
             result.append("Department " + department + ": ");
-            result.append(getDepartmentEmployees(department).stream()
+            String employees = getDepartmentEmployees(department).stream()
                     .map(String::valueOf)
-                    .collect(Collectors.joining()));
+                    .collect(Collectors.joining());
+            result.append(employees);
         }
         return result.toString();
     }
