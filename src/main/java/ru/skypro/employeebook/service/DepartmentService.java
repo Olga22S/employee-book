@@ -3,6 +3,8 @@ package ru.skypro.employeebook.service;
 import ru.skypro.employeebook.model.Employee;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public interface DepartmentService {
 
@@ -12,5 +14,5 @@ public interface DepartmentService {
 
     Collection<Employee> getDepartmentEmployees(int dep);
 
-    String getStringEmployeesByDepartments();
+    Map<Integer, List<Employee>> getEmployeesByDepartments();
 }

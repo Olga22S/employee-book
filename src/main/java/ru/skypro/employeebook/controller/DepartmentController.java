@@ -8,6 +8,8 @@ import ru.skypro.employeebook.model.Employee;
 import ru.skypro.employeebook.service.DepartmentService;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/departments")
@@ -35,7 +37,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/all")
-    public String getEmployee() {
-        return departmentService.getStringEmployeesByDepartments();
+    public Map<Integer, List<Employee>> getEmployee() {
+        return departmentService.getEmployeesByDepartments();
     }
 }
