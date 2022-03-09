@@ -6,7 +6,6 @@ import ru.skypro.employeebook.model.Employee;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,10 +42,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public String getStringEmployeesByDepartments() {
-        Iterator<Integer> iterator = getDepartments().iterator();
         StringBuilder result = new StringBuilder();
-        while (iterator.hasNext()) {
-            int department = iterator.next();
+        for (Integer department : getDepartments()) {
             result.append("Department " + department + ": ");
             result.append(getDepartmentEmployees(department).stream()
                     .map(String::valueOf)
