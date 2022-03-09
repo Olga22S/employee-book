@@ -15,12 +15,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employees = new HashMap<>();
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
+    public Employee addEmployee(String firstName, String lastName, int dep, double salary) {
         String key = firstName + " " + lastName;
         if (employees.containsKey(key)) {
             throw new EmployeeExistsException();
         }
-        Employee employee = new Employee(firstName, lastName);
+        Employee employee = new Employee(firstName, lastName, dep, salary);
         employees.put(key, employee);
         return employee;
     }
