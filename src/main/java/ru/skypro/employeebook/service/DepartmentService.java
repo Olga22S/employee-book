@@ -12,5 +12,5 @@ public interface DepartmentService {
 
     Collection<Employee> getDepartmentEmployees(int dep);
 
-    String getEmployeesSeparatedByDepartments();
+    String getStringEmployeesByDepartments();
 }

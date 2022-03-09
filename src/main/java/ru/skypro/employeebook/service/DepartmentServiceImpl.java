@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,40 +20,44 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Employee getDepartmentMinSalaryEmployee(int dep) {
-        return getEmployeesByDepartment().get(dep)
-                .stream()
+        Collection<Employee> employees = getDepartmentEmployees(dep);
+        return employees.stream()
                 .min(Comparator.comparingDouble(Employee::getSalary))
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
     public Employee getDepartmentMaxSalaryEmployee(int dep) {
-        return getEmployeesByDepartment().get(dep)
-                .stream()
+        Collection<Employee> employees = getDepartmentEmployees(dep);
+        return employees.stream()
                 .max(Comparator.comparingDouble(Employee::getSalary))
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
     public Collection<Employee> getDepartmentEmployees(int dep) {
-        return Collections.unmodifiableCollection(getEmployeesByDepartment().get(dep));
+        return employeeService.getEmployees().stream()
+                .filter(employee -> employee.getDepartment() == dep)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
-    public String getEmployeesSeparatedByDepartments() {
+    public String getStringEmployeesByDepartments() {
+        Iterator<Integer> iterator = getDepartments().iterator();
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<Integer, List<Employee>> item : getEmployeesByDepartment().entrySet()) {
-            result.append("Department " + item.getKey() + ": ");
-            for (Employee employee : item.getValue()) {
-                result.append(employee.toString());
-            }
+        while (iterator.hasNext()) {
+            int department = iterator.next();
+            result.append("Department " + department + ": ");
+            result.append(getDepartmentEmployees(department).stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining()));
         }
         return result.toString();
     }
 
-    private Map<Integer, List<Employee>> getEmployeesByDepartment() {
-        return employeeService.getEmployees()
-                .stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment));
+    private Collection<Integer> getDepartments() {
+        return employeeService.getEmployees().stream()
+                .map(Employee::getDepartment)
+                .collect(Collectors.toSet());
     }
 }
