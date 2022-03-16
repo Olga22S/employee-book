@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, int dep, double salary) {
-        String key = getConcatenatedNamesAsKey(firstName, lastName);
+        String key = getConcatenatedNameAsKey(firstName, lastName);
         if (employees.containsKey(key)) {
             throw new EmployeeExistsException();
         }
@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        String key = getConcatenatedNamesAsKey(firstName, lastName);
+        String key = getConcatenatedNameAsKey(firstName, lastName);
         if (employees.containsKey(key)) {
             return employees.remove(key);
         }
@@ -42,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployee(String firstName, String lastName) {
-        Employee employee = employees.get(getConcatenatedNamesAsKey(firstName, lastName));
+        Employee employee = employees.get(getConcatenatedNameAsKey(firstName, lastName));
         if (isNull(employee)) {
             throw new EmployeeNotFoundException();
         }
@@ -54,10 +54,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return Collections.unmodifiableCollection(employees.values());
     }
 
-    private String getConcatenatedNamesAsKey(String firstName, String lastName) {
+    private String getConcatenatedNameAsKey(String firstName, String lastName) {
         if (!isAlpha(firstName) || !isAlpha(lastName)) {
             throw new NotCorrectNameException();
         }
-        return capitalize(firstName) + " " + capitalize(lastName);
+        return (firstName + " " + lastName).toUpperCase();
     }
 }
