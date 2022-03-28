@@ -14,12 +14,11 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class DepartmentServiceImplTest {
 
     @Mock
-    private EmployeeServiceImpl employeeService;
+    private EmployeeService employeeService;
     @InjectMocks
     private DepartmentServiceImpl out;
 

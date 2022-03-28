@@ -13,7 +13,6 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class EmployeeServiceImplTest {
 
     private EmployeeServiceImpl service;
