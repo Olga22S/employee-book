@@ -2,13 +2,12 @@ package ru.skypro.employeebook.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import ru.skypro.employeebook.constants.Constants;
 import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.exception.NotCorrectNameException;
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +21,7 @@ class EmployeeServiceImplTest {
         service = new EmployeeServiceImpl();
         service.addEmployee("Olga", "Gontsova", 1, 500000);
         service.addEmployee("Kirill", "Kachalov", 2, 1000);
-        service.addEmployee("Nata", "Kukushka", 2, 25000);
+        service.addEmployee("Natasha", "Kukushkina", 2, 25000);
     }
 
     @Test
@@ -42,7 +41,7 @@ class EmployeeServiceImplTest {
     @Test
     public void shouldThrowEmployeeExistsExceptionWhenAddExistingEmployee() {
         assertThrows(EmployeeExistsException.class,
-                () -> service.addEmployee("Nata", "Kukushka", 2, 25000));
+                () -> service.addEmployee("Natasha", "Kukushkina", 2, 25000));
     }
 
     @Test
@@ -95,17 +94,8 @@ class EmployeeServiceImplTest {
     public void whenGetEmployeesThenReturnEmployees() {
         Collection<Employee> result = service.getEmployees();
 
-        Collection<Employee> expected = getExpectedEmployees();
+        Collection<Employee> expected = Constants.EMPLOYEES;
 
         assertTrue(result.containsAll(expected));
     }
-
-    private Collection<Employee> getExpectedEmployees() {
-        Collection<Employee> expected = new ArrayList<>();
-        expected.add(new Employee("Nata", "Kukushka", 2, 25000));
-        expected.add(new Employee("Olga", "Gontsova", 1, 500000));
-        expected.add(new Employee("Kirill", "Kachalov", 2, 1000));
-        return expected;
-    }
-
 }

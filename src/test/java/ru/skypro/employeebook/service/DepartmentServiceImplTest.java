@@ -6,10 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
+import ru.skypro.employeebook.constants.Constants;
 import ru.skypro.employeebook.model.Employee;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -25,7 +27,7 @@ class DepartmentServiceImplTest {
     @BeforeEach
     public void initMock() {
         when(employeeService.getEmployees())
-                .thenReturn(getExpectedListAllEmployees());
+                .thenReturn(Constants.EMPLOYEES);
     }
 
     @Test
@@ -39,7 +41,7 @@ class DepartmentServiceImplTest {
 
     @Test
     public void whenGetDepartmentMaxSalaryEmployeeThenReturnEmployeeWithMaxSalary() {
-        Employee expected = new Employee("Nata", "Kukushka", 2, 25000);
+        Employee expected = new Employee("Natasha", "Kukushkina", 2, 25000);
 
         Employee result = out.getDepartmentMaxSalaryEmployee(2);
 
@@ -48,7 +50,7 @@ class DepartmentServiceImplTest {
 
     @Test
     public void whenGetDepartmentEmployeesThenReturnEmployeesOfDepartment() {
-        Collection<Employee> expected = getExpectedListEmployees();
+        Collection<Employee> expected = Constants.EMPLOYEES_OF_SECOND_DEP;
 
         Collection<Employee> result = out.getDepartmentEmployees(2);
 
@@ -57,37 +59,10 @@ class DepartmentServiceImplTest {
 
     @Test
     public void whenGetEmployeesThenReturnEmployeesByDepartments() {
-        Map<Integer, List<Employee>> expected = getExpectedEmployeesByDepartments();
+        Map<Integer, List<Employee>> expected = Constants.EMPLOYEES_BY_DEPARTMENTS;
 
         Map<Integer, List<Employee>> result = out.getEmployeesByDepartments();
 
         assertEquals(expected, result);
-    }
-
-    private Collection<Employee> getExpectedListAllEmployees() {
-        Collection<Employee> expected = new ArrayList<>();
-        expected.add(new Employee("Olga", "Gontsova", 1, 500000));
-        expected.add(new Employee("Kirill", "Kachalov", 2, 1000));
-        expected.add(new Employee("Nata", "Kukushka", 2, 25000));
-        return expected;
-    }
-
-    private Collection<Employee> getExpectedListEmployees() {
-        List<Employee> expected = new ArrayList<>();
-        expected.add(new Employee("Kirill", "Kachalov", 2, 1000));
-        expected.add(new Employee("Nata", "Kukushka", 2, 25000));
-        return expected;
-    }
-
-    private Map<Integer, List<Employee>> getExpectedEmployeesByDepartments() {
-        Map<Integer, List<Employee>> expected = new HashMap<>();
-        List<Employee> employees1 = new ArrayList<>();
-        List<Employee> employees2 = new ArrayList<>();
-        employees1.add(new Employee("Olga", "Gontsova", 1, 500000));
-        expected.put(1, employees1);
-        employees2.add(new Employee("Kirill", "Kachalov", 2, 1000));
-        employees2.add(new Employee("Nata", "Kukushka", 2, 25000));
-        expected.put(2, employees2);
-        return expected;
     }
 }
