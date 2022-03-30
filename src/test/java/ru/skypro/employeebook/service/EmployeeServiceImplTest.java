@@ -2,7 +2,6 @@ package ru.skypro.employeebook.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.skypro.employeebook.constants.Constants;
 import ru.skypro.employeebook.exception.EmployeeExistsException;
 import ru.skypro.employeebook.exception.EmployeeNotFoundException;
 import ru.skypro.employeebook.exception.NotCorrectNameException;
@@ -11,6 +10,7 @@ import ru.skypro.employeebook.model.Employee;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static ru.skypro.employeebook.constants.Constants.EMPLOYEES;
 
 class EmployeeServiceImplTest {
 
@@ -94,7 +94,7 @@ class EmployeeServiceImplTest {
     public void whenGetEmployeesThenReturnEmployees() {
         Collection<Employee> result = service.getEmployees();
 
-        Collection<Employee> expected = Constants.EMPLOYEES;
+        Collection<Employee> expected = EMPLOYEES;
 
         assertTrue(result.containsAll(expected));
     }

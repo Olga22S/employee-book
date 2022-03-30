@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.skypro.employeebook.constants.Constants;
 import ru.skypro.employeebook.model.Employee;
 
 import java.util.Collection;
@@ -15,6 +14,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static ru.skypro.employeebook.constants.Constants.*;
 
 @ExtendWith(MockitoExtension.class)
 class DepartmentServiceImplTest {
@@ -27,7 +27,7 @@ class DepartmentServiceImplTest {
     @BeforeEach
     public void initMock() {
         when(employeeService.getEmployees())
-                .thenReturn(Constants.EMPLOYEES);
+                .thenReturn(EMPLOYEES);
     }
 
     @Test
@@ -50,7 +50,7 @@ class DepartmentServiceImplTest {
 
     @Test
     public void whenGetDepartmentEmployeesThenReturnEmployeesOfDepartment() {
-        Collection<Employee> expected = Constants.EMPLOYEES_OF_SECOND_DEP;
+        Collection<Employee> expected = EMPLOYEES_OF_SECOND_DEP;
 
         Collection<Employee> result = out.getDepartmentEmployees(2);
 
@@ -59,7 +59,7 @@ class DepartmentServiceImplTest {
 
     @Test
     public void whenGetEmployeesThenReturnEmployeesByDepartments() {
-        Map<Integer, List<Employee>> expected = Constants.EMPLOYEES_BY_DEPARTMENTS;
+        Map<Integer, List<Employee>> expected = EMPLOYEES_BY_DEPARTMENTS;
 
         Map<Integer, List<Employee>> result = out.getEmployeesByDepartments();
 
